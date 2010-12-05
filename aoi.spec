@@ -1,6 +1,6 @@
 %define name    aoi
 %define version 2.8.1
-%define release %mkrel 1
+%define release %mkrel 2
 %define version_nodot 281 
 
 Name:           %{name}
