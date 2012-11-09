@@ -1,0 +1,42 @@
+--- ArtOfIllusion.xml.orig	2010-02-13 01:25:23.000000000 +0100
++++ ArtOfIllusion.xml	2010-02-13 15:20:02.000000000 +0100
+@@ -7,11 +7,7 @@
+   <property name="build" value="ArtOfIllusion/build" />
+   <property name="docs" value="ArtOfIllusion/docs" />
+   <property name="dist" value="." />
+-  <property name="beanshell" value="beanshell.jar" />
+-  <property name="buoy" value="Buoy.jar" />
+-  <property name="buoyx" value="Buoyx.jar" />
+-  <property name="jogl" value="lib/jogl.jar" />
+-  <property name="otherclasses" value="classes.jar" />
++  <property name="classpath" value="/usr/share/java/buoy.jar;/usr/share/java/buoyx.jar;/usr/share/java/jama.jar;/usr/share/java/jogl.jar;/usr/share/java/bsh.jar;jmf.jar"/>
+ <!--  <property name="build.compiler" value="classic" /> -->
+ 
+   <target name="init">
+@@ -25,15 +21,11 @@
+ 
+   <target name="compile" depends="init">
+     <!-- Compile the java code from ${src} into ${build} -->
+-    <javac srcdir="${src}" destdir="${build}" classpath="${beanshell};${otherclasses};${buoy};${buoyx};${jogl}" debug="on" target="1.5" source="1.5" />
++    <javac srcdir="${src}" destdir="${build}" classpath="${classpath}" />
+   </target>
+ 
+   <target name="dist" depends="compile">
+     <!-- Copy all necessary files into ${build}, then create the jar file -->
+-    <unjar src="${otherclasses}" dest="${build}" />
+-    <unjar src="${beanshell}" dest="${build}" />
+-    <unjar src="${buoy}" dest="${build}" />
+-    <unjar src="${buoyx}" dest="${build}" />
+     <copy todir="${build}/artofillusion/Icons">
+       <fileset dir="${src}/artofillusion/Icons" />
+     </copy>
+@@ -49,6 +41,9 @@
+     <copy todir="${build}">
+       <fileset dir="${src}" includes="keystrokes.xml" /> 
+     </copy>
++    <manifest file="${src}/MANIFEST.MF">
++      <attribute name="Main-Class" value="artofillusion.ArtOfIllusion" />
++    </manifest>
+     <jar jarfile="${dist}/ArtOfIllusion.jar" basedir="${build}" manifest="${src}/MANIFEST.MF" />
+   </target>
+ 
