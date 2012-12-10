@@ -1,12 +1,8 @@
-%define name    aoi
-%define version 2.8.1
-%define release %mkrel 2
 %define version_nodot 281 
 
-Name:           %{name}
-Version:        %{version}
-Release:        %{release}
-
+Name:           aoi
+Version:        2.8.1
+Release:        3
 Summary:        3D modelling and rendering studio Written in Java
 URL:            http://www.artofillusion.org
 Group:          Graphics
@@ -14,10 +10,7 @@ Group:          Graphics
 Source0:        %{name}src%{version_nodot}.zip
 Source1:        jmf-2_1_1e-alljava.zip
 Patch0:         fix-build.patch
-
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 License:        GPLv2+
-
 BuildArch:      noarch
 
 BuildRequires:  java-rpmbuild
@@ -30,6 +23,7 @@ BuildRequires:  dos2unix
 BuildRequires:  buoy
 BuildRequires:  xml-commons-apis
 BuildRequires:  xerces-j2
+BuildRequires:  locales-en
 
 Requires:       java >= 1.5
 Requires:       bsh
@@ -65,15 +59,14 @@ mv JMF-2.1.1e/lib/jmf.jar .
 %patch0 -p0
 
 %build
+export LC_ALL=ISO-8859-1
 export CLASSPATH="."
 %ant -buildfile ArtOfIllusion.xml
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
 # Installs the jar
-%__install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}/Plugins
-%__install -m 644 ArtOfIllusion.jar $RPM_BUILD_ROOT%{_datadir}/%{name}
+%__install -dm 755 %{buildroot}%{_datadir}/%{name}/Plugins
+%__install -m 644 ArtOfIllusion.jar %{buildroot}%{_datadir}/%{name}
 
 # Install the script
 cat > %{name} <<EOF
@@ -84,8 +77,8 @@ AOI_CLASSPATH=/usr/share/java/buoy.jar:/usr/share/java/buoyx.jar:/usr/share/java
 java -cp \$AOI_CLASSPATH artofillusion.ArtOfIllusion
 
 EOF
-%__install -dm 755 $RPM_BUILD_ROOT%{_bindir}
-%__install -m 755 %{name} $RPM_BUILD_ROOT%{_bindir}
+%__install -dm 755 %{buildroot}%{_bindir}
+%__install -m 755 %{name} %{buildroot}%{_bindir}
 
 # convert win32 EOL to unix EOL
 dos2unix LICENSE
@@ -110,6 +103,20 @@ Type=Application
 Categories=X-MandrivaLinux-Multimedia-Graphics;Graphics;
 EOF
 
-%clean
-rm -rf $RPM_BUILD_ROOT
+
+
+%changelog
+* Sun Dec 05 2010 Oden Eriksson <oeriksson@mandriva.com> 2.8.1-2mdv2011.0
++ Revision: 609981
+- rebuild
+
+* Mon Feb 15 2010 Nicolas Lécureuil <nlecureuil@mandriva.com> 2.8.1-1mdv2010.1
++ Revision: 506020
+- import aoi
+
+
+* Fri Feb 12 2010 Jonathan Bayle <hide@mrhide.fr> 2.8.1-1mdv2010.0
+- new package
+
+
 
