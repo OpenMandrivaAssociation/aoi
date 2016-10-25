@@ -2,7 +2,7 @@
 
 Name:           aoi
 Version:        2.8.1
-Release:        4
+Release:        5
 Summary:        3D modelling and rendering studio Written in Java
 URL:            http://www.artofillusion.org
 Group:          Graphics
@@ -29,7 +29,7 @@ Requires:       java >= 1.5
 Requires:       bsh
 Requires:       jogl
 Requires:       jama
-Requires:       gluegen
+Requires:       gluegen2
 Requires:       buoy
 
 %description
