@@ -4,7 +4,7 @@ Name:           aoi
 Version:        2.8.1
 Release:        4
 Summary:        3D modelling and rendering studio Written in Java
-URL:            http://www.artofillusion.org
+URL:            https://www.artofillusion.org
 Group:          Graphics
 
 Source0:        %{name}src%{version_nodot}.zip
